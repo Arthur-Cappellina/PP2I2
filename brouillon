@@ -1,0 +1,27 @@
+void insert(table_h* table_hash,station* station_s1,int poids_d){
+    int index = fonction_hash(station_s1->name)%table_hash->size;
+    if(table_hash->table[index]==NULL){
+        couple* new_element = malloc(sizeof(couple));
+        new_element->poids = poids_d;
+        new_element->station_s = station_s1;
+        table_hash->table[index] = new_element;
+        table_hash->count += 1;
+    }
+    else{
+        bool res = true;
+        int i = 1;
+        while(res){
+            int hash_new = (index + i*fonction_hash2(station_s1->name,table_hash->size))%table_hash->size;
+            if(table_hash->table[hash_new] == NULL){
+                couple* new_element = malloc(sizeof(couple));
+                new_element->poids = poids_d;
+                new_element->station_s = station_s1;
+                table_hash->table[hash_new] = new_element;
+                res = false;
+                table_hash->count += 1;
+            }
+            i++;
+        }
+    }
+}
+
